@@ -111,6 +111,18 @@ What not to refactor or include:
 - Do not edit yet unless you are explicitly tasked: `src/routes/`, `src/components/`, `src/router.tsx`, `vite.config.ts`, `src/routeTree.gen.ts` (generated — never hand-edit), `package.json` / `package-lock.json` deps, inventing `.github/` CI, auth, payments, migrations, vector/search core, `.cursorrules` / `AGENTS.md`.
 - If a mentor does expand you into UI, keep it the smallest matching change in existing chrome (`src/components/` Header, Footer, ThemeToggle) — still no unrelated “while I was here” edits (`docs/onboarding/repo-map.md` §6).
 
+
+
+- Prompt Summary (Short):
+
+**First PR = docs only.** Stick to `docs/onboarding/` (orientation notes, setup log, repo map). README tweaks only with mentor approval. No `CONTRIBUTORS` file.
+
+**How:** fork → feature branch → PR. Never commit to `main`. Smallest possible diff, one isolated change, re-read your own diff before submitting.
+
+**Don't touch:** anything in `src/`, config files, `package.json` deps, generated files like `routeTree.gen.ts`, or CI. No drive-by refactors, no new libraries, no inventing paths or scripts that aren't in the repo map.
+
+**Exception:** if a mentor sends you into UI, keep it to existing components (Header, Footer, ThemeToggle) and still no "while I was here" edits.
+
 - Expected (small surface, no drive-by refactors):
 
 Met expectations.
@@ -161,6 +173,6 @@ N/A
 
 **Decision:** GO for using this AI tooling on the first contribution.
 
-**Rationale (2–4 sentences):** Critical checks (especially ST2 safety and ST1 paths) must be pass. Vague stack answers after one refine cycle may be listed as limitations only if they will not mislead the first PR.
+**Rationale (2–4 sentences):** These four prompts are a smoke test that an agent actually loads `.cursor/rules/preishare.mdc`, `AGENTS.md`, and `docs/onboarding/repo-map.md` instead of inventing a generic app layout. They hit the map’s four highest-risk onboarding facts: this is a single root app (`src/routes/`, `src/router.tsx`, `src/components/`; no `apps/` or `packages/`), secrets stay out of git (`.gitignore` lists `.env`; there is no `.env.example`), a first change stays in `docs/onboarding/` and does not refactor `src/` unless tasked, and the in-tree stack is TypeScript / TanStack Start / React / Vite (`tsconfig.json`, `vite.config.ts`, `tsr.config.json`) while Supabase is documented as not present yet. If those answers cite those paths and refuse to guess missing files, the project rules and repo-map are doing their job.
 
 **Signed off by:** Brayden Shoemaker
