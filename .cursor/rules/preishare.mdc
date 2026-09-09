@@ -28,6 +28,7 @@ PREIshare is a real-estate intelligence product. This checkout is a **single-pac
 
 ## How to change code
 
+- Never delete, `git rm`, or empty tracked files unless the user explicitly names those paths and says to delete them. Do not slim a PR by removing onboarding docs or other existing work from the branch.
 - Prefer the smallest diff that completes the requested task
 - Match neighboring naming, file layout, and TypeScript style (`src/components/` Header, Footer, ThemeToggle)
 - Do not drive-by refactor, add libraries, or add lint/format/test tooling the repo-map says is absent

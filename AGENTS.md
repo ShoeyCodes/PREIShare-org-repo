@@ -27,4 +27,6 @@ Onboarding (read before editing):
 
 Never commit `.env`, API keys, tokens, or connection strings (`.env` is gitignored; there is no `.env.example`). Never paste secrets into docs, rules, chat, or the setup-log. Do not invent credentials or touch production databases (none are wired in this checkout). If a change needs configuration, document the variable **name** only, never a real value.
 
+**Never delete files without explicit permission.** Do not `git rm` or drop tracked files to slim a PR unless the user names those paths and asks to delete them. If the PR is too large, name every path in the description or wait for permission—do not remove existing work from the branch.
+
 **Avoid unless explicitly tasked:** `src/routes/`, `src/components/`, `src/router.tsx`, `vite.config.ts`, `src/routeTree.gen.ts` (generated — never hand-edit), `package.json` / `package-lock.json` deps, inventing `.github/` CI, auth, payments, migrations, vector/search core.
