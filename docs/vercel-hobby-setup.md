@@ -8,8 +8,8 @@
 | Item | Value |
 | --- | --- |
 | GitHub repository (you can push) | `https://github.com/ShoeyCodes/PREIShare-org-repo` |
-| Instructor collaborator | `thortek` added: no |
-| Vercel Production URL | not created yet (no Hobby project / `*.vercel.app` hostname found) |
+| Instructor collaborator | `thortek` added: Yes |
+| Vercel Production URL | https://prei-share-org-repo-kappa.vercel.app/ |
 | Preview URLs | Do **not** submit these to Canvas |
 
 ## Hobby constraints I will keep
