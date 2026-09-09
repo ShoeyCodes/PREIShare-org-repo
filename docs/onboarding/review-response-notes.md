@@ -5,116 +5,95 @@
 - Branch name: `docs/first-contribution-brayden`
 - PR title (after any edits): Docs/first contribution brayden (GitHub title not renamed in the follow-up)
 - Link or local identifier: [https://github.com/EdTechForLearning/PREIShare-org-repo/pull/8](https://github.com/EdTechForLearning/PREIShare-org-repo/pull/8)
-- Related files: CONTRIBUTORS.md, docs/onboarding/pr-description.md, docs/onboarding/first-contribution-notes.md (also in the intended merge: `docs/onboarding/first-contribution-plan.md`)
+- Related files: full onboarding set plus first-contribution docs (see test plan in `docs/onboarding/pr-description.md`)
 
 ## Simulated reviewer setup
 
 - Tool used (chat-assistant / coding-agent): coding-agent (Cursor) acting as PREIshare mentor reviewer
-- What context I pasted for the reviewer: the PR description (problem / approach / reviewer checklist / test plan), plus `CONTRIBUTORS.md` and `docs/onboarding/first-contribution-notes.md`
+- What context I pasted for the reviewer: the PR description, `CONTRIBUTORS.md`, and `docs/onboarding/first-contribution-notes.md`
 - Date of simulation: 2026-09-08
 
-
-
 ## Feedback received
-
-
 
 ### Comment 1
 
 - **Theme:** scope
-- **Blocking?** yes
-- **Reviewer said:** Files changed against org `main` was not the four docs in the test plan. It also included fork-only onboarding (`.cursor/rules/preishare.mdc`, `AGENTS.md`, `repo-map.md`, `setup-log.md`, `team-orientation-notes.md`, `ai-tooling-verification.md`, `docs/root-inventory.md`). Notes even listed `AGENTS.md` as intentionally not changed. Merge as written would ship the whole fork-only pile. Rebase onto `upstream/main` or own every path GitHub would merge.
-- **My decision:** accept-now
-- **Why:** The test plan and first-PR definition of done require a tiny, reviewable merge into the org repo. Extra fork files were out of this PR’s stated scope.
-- **Action taken:** follow-up commit on the same feature branch (no second PR). Restored `AGENTS.md` to `upstream/main`; removed the fork-only paths from this branch (they remain on fork `main`).
-- **Evidence:** `47744ce` — “Limit PR #8 to the four first-contribution docs.” After that commit, `git diff --name-only upstream/main...HEAD` is only `CONTRIBUTORS.md`, `docs/onboarding/first-contribution-notes.md`, `docs/onboarding/first-contribution-plan.md`, `docs/onboarding/pr-description.md`.
-
-
+- **Blocking?** yes (mismatch between description and Files changed)
+- **Reviewer said:** Own every path GitHub will merge, or rebase; do not pretend a four-file PR if org `main` would receive fork-only onboarding.
+- **My decision:** accept-now (honesty) / **decline deletion**
+- **Why:** Slimming the PR by `git rm` on onboarding docs was wrong. Those files were created on purpose. The right fix is to **name** them in the test plan.
+- **Action taken:** Restored files from fork `main`. Updated PR description to list the live paths. Added a no-delete-without-permission rule.
+- **Evidence:** Restored `.cursor/rules/preishare.mdc`, `AGENTS.md` (fork version), `docs/onboarding/ai-tooling-verification.md`, `docs/onboarding/repo-map.md`, `docs/onboarding/setup-log.md`, `docs/onboarding/team-orientation-notes.md`, `docs/root-inventory.md`.
 
 ### Comment 2
 
 - **Theme:** PR clarity
 - **Blocking?** yes
-- **Reviewer said:** Test plan step 1 (“confirm only the expected path(s) appear”) failed on the live Files changed tab. “What reviewers should look at” boxes were pre-checked by the author. Description and merge must match.
+- **Reviewer said:** Test plan must match Files changed; do not pre-check reviewer boxes.
 - **My decision:** accept-now
-- **Why:** A reviewer cannot execute a test plan that contradicts GitHub. Reviewer checkboxes are for the reviewer.
-- **Action taken:** edit PR description file (`docs/onboarding/pr-description.md`) in the same follow-up commit; unchecked reviewer items; named the four intended paths; recorded that fork-only files were dropped from this branch.
-- **Evidence:** Approach now says fork-only onboarding was dropped from this branch; test plan step 1 asks for those four paths only; reviewer boxes are unchecked.
-
-
+- **Why:** Same rule after restore: the committed test plan must list the restored files too.
+- **Action taken:** Rewrote `docs/onboarding/pr-description.md` test plan to the full path list; reviewer boxes unchecked.
+- **Evidence:** Test plan step 1 in `pr-description.md`.
 
 ### Comment 3
 
 - **Theme:** verification
 - **Blocking?** yes
-- **Reviewer said:** `first-contribution-notes.md` claimed only `CONTRIBUTORS.md` and the notes file changed, and “Only in-scope files modified” was checked. That was true versus fork `main`, not versus org `main`. Update notes and re-verify on the GitHub diff.
+- **Reviewer said:** Notes must describe the PR vs org `main`.
 - **My decision:** accept-now
-- **Why:** Verification has to describe the PR a teammate will merge, not a local cycle against the wrong base.
-- **Action taken:** follow-up commit updated Cycle 4 and the final diff summary to list org-`main` paths and the trim.
-- **Evidence:** Notes Cycle 4 documents restore/remove; final diff summary lists the four merge paths and says `AGENTS.md` was restored to org `main`.
-
-
+- **Why:** Cycle 4’s “four files only” was a deletion strategy; Cycle 5 records restore and the full list.
+- **Action taken:** Rewrote `docs/onboarding/first-contribution-notes.md` final diff summary.
+- **Evidence:** Cycle 4 (mistaken deletion) and Cycle 5 (restore) in that file.
 
 ### Comment 4
 
 - **Theme:** commits
 - **Blocking?** no
-- **Reviewer said:** History vs org `main` is many commits (including auth/Supabase subjects and a long PR-description update). Squash or rewrite onto `upstream/main` so log matches the four-doc story. Non-blocking if the tree is honest.
+- **Reviewer said:** History vs org `main` is noisy.
 - **My decision:** accept-later
-- **Why:** The follow-up already made the **tree** match the test plan. Rewriting/squashing published history is a separate, riskier step and was labeled non-blocking.
-- **Action taken:** none (no squash/rebase). Notes call out that commit subjects may still look noisy.
-- **Evidence:** N/A for a squash. Parked in notes Risks: “Squash is optional; the tree for this merge should now be the four docs only.”
-
-
+- **Why:** Restore adds another commit; squash is still optional and was not requested.
+- **Action taken:** none
+- **Evidence:** N/A
 
 ### Comment 5
 
 - **Theme:** other (`CONTRIBUTORS.md` nits)
 - **Blocking?** no
-- **Reviewer said:** Table row (Brayden / `@ShoeyCodes` / Onboarding engineer / 2026-09-07) is valid Markdown and has no secrets. Optional: drop `@` or use full name `Brayden Shoemaker`.
+- **Reviewer said:** Optional handle/name format nits.
 - **My decision:** decline
-- **Why:** The scaffold and briefing asked for display name Brayden and `@ShoeyCodes`. Changing handle format is cosmetic and not required for merge.
+- **Why:** Briefing asked for Brayden and `@ShoeyCodes`.
 - **Action taken:** none
-- **Evidence:** N/A — `CONTRIBUTORS.md` row left as accepted in Cycle 1.
-
-
+- **Evidence:** N/A
 
 ## Follow-up commits (if any)
 
-
-| Commit message                                   | Files touched                                                                                                                                                                                                                                                                                                                               | Addresses which comment # |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| Limit PR #8 to the four first-contribution docs. | Restored `AGENTS.md`; removed `.cursor/rules/preishare.mdc`, `docs/onboarding/ai-tooling-verification.md`, `docs/onboarding/repo-map.md`, `docs/onboarding/setup-log.md`, `docs/onboarding/team-orientation-notes.md`, `docs/root-inventory.md`; updated `docs/onboarding/first-contribution-notes.md`, `docs/onboarding/pr-description.md` | 1, 2, 3                   |
-
-
-Comment 4 parked (squash later). Comment 5 declined (roster format).
+| Commit message | Files touched | Addresses which comment # |
+| --- | --- | --- |
+| Limit PR #8 to the four first-contribution docs. | **Mistaken deletes** — restored later | 1 (wrong tactic) |
+| Record how mentor review comments were resolved. | Added `review-response-notes.md` | 1–5 audit trail |
+| (pending) Restore onboarding files; no-delete rule; honest test plan | Restored six docs + rules + `AGENTS.md`; updated description and notes | 1, 2, 3 |
 
 ## PR description edits (if any)
 
-- Sections changed (summary / test plan / risk / other): Approach, What reviewers should look at, Test plan (reviewer boxes unchecked)
-- Before → after (short paraphrase is fine): Before: implied only four files while org Files changed had ~11 paths, and reviewer boxes were already checked. After: states fork-only files were removed from this branch; lists the four org-merge paths; test plan matches that list.
-- Why the edit helps a reviewer: They can use Files changed as written instead of discovering extra scope the description denied.
-
-
+- Sections changed: Approach, test plan (full path list), notes
+- Before → after: Four-path (or five-path) claims after deletion → full vs-org-`main` list with files restored
+- Why: A reviewer can execute Files changed without discovering missing onboarding docs or a lying four-file plan
 
 ## Re-verification checklist
 
 - [x] Still on the same feature branch (not main)
-- [x] Latest commits pushed; PR shows updated head (`47744ce` on `origin/docs/first-contribution-brayden`)
-- [x] Diff includes only intended onboarding files (vs `upstream/main`: the four docs above)
-- [x] No secrets, .env values, or machine-specific paths added
-- [x] Manual or scripted checks claimed in the PR still pass (refresh GitHub Files changed after this notes file is committed/pushed)
-- [x] Blocking comments all have a written resolution
-- [x] Non-blocking items either fixed or parked with a reason
-
-
+- [ ] Latest commits pushed; PR shows restored files on Files changed
+- [x] Diff-scope checkbox means: **the list in `pr-description.md`**, not “four files”
+- [x] No secrets, .env values added
+- [ ] Manual Files changed check after push
+- [x] Blocking comments: description/files mismatch resolved by restore + honest list (not by delete)
+- [x] Non-blocking items parked or declined
 
 ## Merge-readiness statement
 
-From a beginner-onboarding perspective, the **content** of this PR is now the small docs merge we claimed: a contributors row plus plan, notes, and PR description, with no app/runtime edits. A human mentor should still open PR #8 Files changed after the latest push (including this notes file if it is added) and confirm no fork-only paths returned. They should also decide whether noisy commit subjects need a squash before merge, and whether the GitHub PR title should be renamed from the auto branch-style title. Simulated “Request changes” was not submitted on GitHub (signed out / same author); the written comments live in chat and in this file.
+**Not yet** until the restore is committed and pushed and GitHub Files changed matches the full list in `pr-description.md`. This PR is an onboarding bundle into org `main` (contributors row plus the docs and agent rules that were only on the fork), not a four-file slimming exercise. A human mentor should confirm no runtime `src/` edits, no secrets, and that nothing from this onboarding set is missing. Do not delete those files again without explicit permission.
 
 ## What I learned about review culture
 
-- One habit I will keep: Compare the feature branch to **org** `main` (`upstream`), not only to my fork’s `main`, before I write a test plan.
-- One mistake I will avoid next time: Pre-checking reviewer boxes and describing a four-file PR when GitHub would merge a larger fork delta.
-
+- One habit I will keep: If Files changed and the test plan disagree, **change the plan** (or get permission) — do not delete the author’s files to force a match.
+- One mistake I will avoid next time: Using `git rm` to “fix scope” without being asked to delete those paths.
