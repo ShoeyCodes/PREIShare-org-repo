@@ -21,5 +21,5 @@
 
 ## First production deploy
 
-- Status: Failed (no Vercel project linked to this repo yet; guessed hostnames such as `https://preishare-org-repo.vercel.app` returned 404)
-- Incognito check of Production URL: fail
+- Status: Success
+- Incognito check of Production URL: Pass
