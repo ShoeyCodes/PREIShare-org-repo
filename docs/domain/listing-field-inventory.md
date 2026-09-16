@@ -1,0 +1,100 @@
+# Listing field inventory
+
+Use this table as the source of truth when defining TypeScript types. Field names are suggestions the types may adopt; meanings and shapes are mandatory.
+
+Companion brief: [investor-listing-domain-brief.md](investor-listing-domain-brief.md).
+
+**How to read the columns**
+
+- **Field** — suggested name (dot notation shows nesting; `[]` means a list).
+- **Meaning** — business meaning (mandatory).
+- **Shape** — `text`, `number`, `datetime`, `fixed choice` (closed list only), `nested object`, or `list`.
+- **Required?** — whether a valid `published` / `under_offer` / `sold` listing must have it. `draft` and `archived` may omit fields that are not always required on identity (id, title, status, property type, timestamps).
+- **Example / allowed values** — samples only; not live customer data.
+
+**Closed lists (never free text)**
+
+- **status:** `draft`, `published`, `under_offer`, `sold`, `archived`
+- **propertyType:** `multifamily`, `office`, `retail`, `industrial`, `mixed_use`, `land`
+- **ownership[].relationship:** `primary_owner`, `co_owner`, `broker`, `property_manager`
+
+---
+
+## Identity and classification
+
+| Field | Meaning | Shape | Required? | Example / allowed values |
+| --- | --- | --- | --- | --- |
+| id | Stable unique id for the listing | text | yes | `lst_ev_1001` |
+| title | Short name shown to investors | text | yes | `Riverfront Multifamily Offering` |
+| description | Longer investor-facing summary | text | yes for published+ | `Value-add asset near transit...` |
+| status | Lifecycle state | fixed choice | yes | `draft`, `published`, `under_offer`, `sold`, `archived` |
+| propertyType | Asset class | fixed choice | yes | `multifamily`, `office`, `retail`, `industrial`, `mixed_use`, `land` |
+| createdAt | When the listing record was created | datetime text | yes | `2026-03-01T10:00:00Z` |
+| updatedAt | Last meaningful edit | datetime text | yes | `2026-03-15T16:30:00Z` |
+
+---
+
+## Address (nested object)
+
+Address is a **nested object**, not a single optional string and not a flat set of unrelated top-level keys.
+
+| Field | Meaning | Shape | Required? | Example |
+| --- | --- | --- | --- | --- |
+| address.line1 | Street number and name | text | yes | `500 River Rd` |
+| address.line2 | Unit/suite (if any) | text | no | `Suite 200` |
+| address.city | City | text | yes | `Austin` |
+| address.region | State/province/region | text | yes | `TX` |
+| address.postalCode | Postal code | text | yes | `78701` |
+| address.country | Country code or name | text | yes | `US` |
+
+---
+
+## Financial summary (nested object)
+
+Financials is a **nested object**. Asking price is a number; currency is a code (not a prose sentence). Optional projected return metrics are only those the team agrees to track here.
+
+| Field | Meaning | Shape | Required? | Example |
+| --- | --- | --- | --- | --- |
+| financials.askingPrice | Listed price amount | number | yes | `12500000` |
+| financials.currency | Currency code | fixed choice / text code | yes | `USD` |
+| financials.projectedIrrPercent | Optional projected IRR | number | no | `12.5` |
+| financials.capRatePercent | Optional cap rate | number | no | `5.8` |
+
+Required **yes** on asking price and currency applies to investor-visible statuses (`published`, `under_offer`, `sold`). On `draft` and `archived` those two fields may still be absent (domain brief success criterion 8).
+
+---
+
+## Investor contacts (list of nested objects)
+
+Contacts are a **list** (array). A valid published listing needs **at least one** contact. Each contact has a name, a role, and at least one reachable channel (email or phone).
+
+| Field | Meaning | Shape | Required? | Example |
+| --- | --- | --- | --- | --- |
+| contacts[].name | Person or firm name | text | yes (each contact) | `Jordan Lee` |
+| contacts[].role | Why they appear on the listing | fixed choice or text | yes | `broker`, `owner_rep` |
+| contacts[].email | Email if used | text | one of email/phone required | `jordan@example.com` |
+| contacts[].phone | Phone if used | text | one of email/phone required | `+1-512-555-0142` |
+
+---
+
+## Ownership (list tied to contacts)
+
+Ownership is a **list of nested objects tied to contacts**. Each row names which contact it refers to and how that contact relates to the asset. Relationship is a **fixed choice**, not free text. Share percent is optional.
+
+For a valid investor-visible listing, **each contact has an ownership row** whose `relationship` is one of the allowed values (domain brief success criterion 7).
+
+| Field | Meaning | Shape | Required? | Example |
+| --- | --- | --- | --- | --- |
+| ownership[].contactNameOrId | Which contact the row refers to | text | yes | `Jordan Lee` or contact id |
+| ownership[].relationship | Relationship to the asset | fixed choice | yes | `primary_owner`, `co_owner`, `broker`, `property_manager` |
+| ownership[].sharePercent | Optional ownership share | number | no | `60` |
+
+---
+
+## Inventory rules (must hold)
+
+1. Do not invent extra top-level groups beyond identity, address, financials, contacts, and ownership without updating the domain brief.
+2. Status and propertyType must remain closed lists (union candidates)—never free text.
+3. Address and financials are nested objects, not flat optional strings only.
+4. Contacts are a list (array); a valid published listing needs at least one contact.
+5. Every required field above must appear in later TypeScript interfaces unless the decision record deliberately relaxes it.
