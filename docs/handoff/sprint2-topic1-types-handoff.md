@@ -75,19 +75,15 @@ Client pain (loose JSON)
 
 ## 5. Prompting and review self-assessment
 
-Complete this section **yourself in first person**. Leave the blanks as your real habits—do not let an agent invent a learning story.
-
-Prompts (replace the ellipses with your words):
-
-- **Prompting habit that helped:** …
-- **Second prompting habit that helped:** …
-- **Review habit that caught an agent mistake:** …
-- **What I would do differently next topic:** …
-- **Confidence (1–5) explaining InvestorListing to a teammate:** …
+- **Prompting habit that helped:** I pointed the agent at exact files and a scaffold instead of “just make types,” and I said not to use `as InvestorListing` so errors stayed real.
+- **Second prompting habit that helped:** After a draft, I asked it to match the course field names and unions, then I checked the diff against `src/types` myself.
+- **Review habit that caught an agent mistake:** Graders look at exact paths. We put ADR-001 under `docs/type-safety/` first; PAUL wanted `docs/decisions/`. Empty `.gitkeep` also failed until it had a line of text.
+- **What I would do differently next topic:** Ask for the autograder path and a non-empty file up front, and keep work on a feature branch until I’m sure `main` is what they grade.
+- **Confidence (1–5) explaining InvestorListing to a teammate:** 4 — I can walk status unions, nested address/financials, and why `closedAt` is only on closed.
 
 ## 6. Handoff checklist for the next owner
 
-- [ ] Read `docs/decisions/ADR-001-investor-listing-types.md` and this handoff before opening a UI or SQL PR
+- [ ] Read `docs/decisions/ADR-001-investor-listing-types.md` and this handoff (`docs/handoff/sprint2-topic1-types-handoff.md`) before opening a UI or SQL PR
 - [ ] Import listing types from `src/types/index.ts` only (do not redefine listing shape)
 - [ ] Keep `npm run typecheck` (the `typecheck` script in `package.json`) green on valid fixtures
 - [ ] Do not delete intentional invalid fixture files; they document safety (`src/fixtures/invalid-listings.errors.ts`, `docs/type-safety/expected-type-errors.md`)
