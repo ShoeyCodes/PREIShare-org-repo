@@ -29,5 +29,5 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "src/routeTree.gen.ts"]
+  "exclude": ["node_modules", "dist", "src/routeTree.gen.ts", "src/fixtures/invalid-listings.errors.ts"]
 }

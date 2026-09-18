@@ -11,15 +11,21 @@ These types catch those mistakes at **compile time**—before users see them.
 - Domain type modules only (listing, address, status, contacts, etc.)
 - No UI components, no API route handlers, no database clients
 
-## How to check types
-From the project root after `npm install`:
+## Typecheck
+
+From the project root, run:
 
 ```bash
 npm run typecheck
 ```
 
-That runs `tsc --noEmit`: TypeScript checks every file under `src/` and reports
-errors without writing JavaScript output files.
+What success looks like: the command finishes with no type errors (exit code 0).
+
+Notes for beginners:
+- `tsc --noEmit` means “check types only; do not write compiled JavaScript files.”
+- Valid sources include `src/types/**` and `src/fixtures/sample-investor-listings.ts`.
+- Intentional bad examples live in `src/fixtures/invalid-listings.errors.ts` and are documented in `docs/type-safety/expected-type-errors.md`. They are for learning and review, not for the clean gate. `tsconfig.json` excludes that file so `npm run typecheck` can succeed.
+- Before review, walk through `docs/type-safety/verification-checklist.md`.
 
 ## Strict mode (plain language)
 `strict: true` in `tsconfig.json` turns on the checker’s safest rules. Combined
