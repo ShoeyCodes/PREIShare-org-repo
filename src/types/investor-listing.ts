@@ -2,10 +2,11 @@ import type { ListingStatus } from "./listing-status";
 import type { PropertyType } from "./property-type";
 import type { Address } from "./address";
 import type { FinancialSummary } from "./financial-summary";
+import type { InvestorContact } from "./investor-contact";
+import type { Ownership } from "./ownership";
 
 /**
- * Core PREIshare investor listing with nested address and financial summary.
- * Contact lists are added in a later step.
+ * Core PREIshare investor listing with nested address, financials, contacts, and ownership.
  */
 export interface InvestorListing {
   /** Stable unique id for this listing (assigned by the system). */
@@ -28,6 +29,18 @@ export interface InvestorListing {
 
   /** Nested metrics — optional when figures are not yet known. */
   financialSummary?: FinancialSummary;
+
+  /** One or more people associated with this listing. */
+  contacts: InvestorContact[];
+
+  /**
+   * Must match InvestorContact.id of one entry in `contacts`.
+   * TypeScript cannot fully enforce "id exists in array" alone;
+   * we still type it as string so callers pass an id, not a whole loose object.
+   */
+  primaryContactId: string;
+
+  ownership: Ownership;
 
   /** ISO-8601 datetime string when the listing was first created. */
   createdAt: string;
