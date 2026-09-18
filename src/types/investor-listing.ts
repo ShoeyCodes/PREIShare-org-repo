@@ -1,9 +1,11 @@
 import type { ListingStatus } from "./listing-status";
 import type { PropertyType } from "./property-type";
+import type { Address } from "./address";
+import type { FinancialSummary } from "./financial-summary";
 
 /**
- * Core PREIshare investor listing — scalar fields only.
- * Nested types (address, financials, contacts) are added in later steps.
+ * Core PREIshare investor listing with nested address and financial summary.
+ * Contact lists are added in a later step.
  */
 export interface InvestorListing {
   /** Stable unique id for this listing (assigned by the system). */
@@ -21,11 +23,11 @@ export interface InvestorListing {
   /** Asset class — closed list from the field inventory, never free text. */
   propertyType: PropertyType;
 
-  /**
-   * Asking price in whole US dollars (no currency symbol).
-   * Example: 450000 means $450,000.
-   */
-  askingPrice: number;
+  /** Nested location — required; not flattened onto the listing. */
+  address: Address;
+
+  /** Nested metrics — optional when figures are not yet known. */
+  financialSummary?: FinancialSummary;
 
   /** ISO-8601 datetime string when the listing was first created. */
   createdAt: string;
