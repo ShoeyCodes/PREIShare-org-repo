@@ -31,6 +31,7 @@ export const invalidStatusSpelling: InvestorListing = {
     capRate: 0.06,
     occupancyRate: 90,
     askingPrice: 450000,
+    currency: "USD",
   },
   contacts: [
     {
@@ -66,6 +67,7 @@ export const missingAddressCity: InvestorListing = {
     capRate: 0.061,
     occupancyRate: 85,
     askingPrice: 520000,
+    currency: "USD",
   },
   contacts: [
     {
@@ -102,6 +104,7 @@ export const priceAsString: InvestorListing = {
     capRate: 0.067,
     occupancyRate: 100,
     askingPrice: "610000",
+    currency: "USD",
   },
   contacts: [
     {
@@ -132,6 +135,13 @@ export const invalidContactsShape: InvestorListing = {
     region: "TX",
     postalCode: "78701",
     country: "US",
+  },
+  financialSummary: {
+    noi: 50000,
+    capRate: 0.05,
+    occupancyRate: 80,
+    askingPrice: 900000,
+    currency: "USD",
   },
   contacts: {
     name: "Alex Rivera",
@@ -169,5 +179,72 @@ export const invalidOwnershipShape: InvestorListing = {
     },
   ],
   primaryContactId: "contact-bad-ownership",
+  financialSummary: {
+    noi: 0,
+    capRate: 0,
+    occupancyRate: 0,
+    askingPrice: 250000,
+    currency: "USD",
+  },
   ownership: [{ ownerName: "Lee Capital", percentOwned: 100 }],
+};
+
+// Case: investor-visible listing with zero contacts (domain: at least one)
+export const emptyContactsOnActive: InvestorListing = {
+  id: "listing-empty-contacts",
+  ...timestamps,
+  title: "Active listing with no one to call",
+  summary: "Should fail because active listings need at least one contact.",
+  status: "active",
+  propertyType: "multi_family",
+  address: {
+    street: "10 Empty Contacts Ln",
+    city: "Austin",
+    region: "TX",
+    postalCode: "78701",
+    country: "US",
+  },
+  financialSummary: {
+    noi: 100000,
+    capRate: 0.05,
+    occupancyRate: 90,
+    askingPrice: 2000000,
+    currency: "USD",
+  },
+  contacts: [],
+  primaryContactId: "nobody",
+  ownership: {
+    ownerName: "Anonymous Holdings",
+    ownershipPercent: 100,
+  },
+};
+
+// Case: investor-visible listing missing the financial summary
+export const missingFinancialsOnActive: InvestorListing = {
+  id: "listing-missing-financials",
+  ...timestamps,
+  title: "Active listing with no price package",
+  summary: "Should fail because active listings require financialSummary.",
+  status: "active",
+  propertyType: "commercial",
+  address: {
+    street: "50 No Price St",
+    city: "Dallas",
+    region: "TX",
+    postalCode: "75201",
+    country: "US",
+  },
+  contacts: [
+    {
+      id: "contact-missing-financials",
+      fullName: "Pat Morgan",
+      role: "broker",
+      email: "pat@example.com",
+    },
+  ],
+  primaryContactId: "contact-missing-financials",
+  ownership: {
+    ownerName: "Morgan Holdings",
+    ownershipPercent: 100,
+  },
 };

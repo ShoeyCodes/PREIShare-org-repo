@@ -27,6 +27,7 @@ export const sampleActiveListing: InvestorListing = {
     capRate: 0.073,
     occupancyRate: 94.5,
     askingPrice: 4250000,
+    currency: "USD",
   },
   contacts: [
     {
@@ -96,6 +97,7 @@ export const sampleUnderContractListing: InvestorListing = {
     capRate: 0.075,
     occupancyRate: 100,
     askingPrice: 6100000,
+    currency: "USD",
   },
   contacts: [
     {
@@ -134,6 +136,7 @@ export const sampleClosedListing: InvestorListing = {
     capRate: 0.072,
     occupancyRate: 88,
     askingPrice: 2750000,
+    currency: "USD",
   },
   contacts: [
     {

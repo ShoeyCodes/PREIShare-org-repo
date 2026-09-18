@@ -7,6 +7,7 @@ export type { PropertyType } from "./property-type";
 export type {
   InvestorListing,
   InvestorListingBase,
+  InvestorContacts,
   ClosedInvestorListing,
   OpenInvestorListing,
 } from "./investor-listing";
