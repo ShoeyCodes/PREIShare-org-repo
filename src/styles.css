@@ -464,7 +464,7 @@ a {
   color: var(--sea-ink);
 }
 
-.sidebar-nav ul {
+.dashboard-sidebar .nav-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -473,7 +473,7 @@ a {
   gap: 0.55rem;
 }
 
-.sidebar-nav a {
+.dashboard-sidebar .nav-link {
   display: inline-block;
   padding: 0.2rem 0.15rem;
   font-weight: 650;
@@ -482,8 +482,13 @@ a {
   color: var(--lagoon-deep);
 }
 
-.sidebar-nav a:hover {
+.dashboard-sidebar .nav-link:hover,
+.dashboard-sidebar .nav-link-active {
   color: var(--sea-ink);
+}
+
+.dashboard-sidebar .nav-link-active::after {
+  transform: scaleX(1);
 }
 
 .dashboard-header {
