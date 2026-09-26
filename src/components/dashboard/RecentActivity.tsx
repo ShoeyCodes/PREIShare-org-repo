@@ -1,49 +1,63 @@
 export type ActivityItem = {
-  date: string
-  summary: string
+  id: string
+  title: string
+  detail: string
+  dateLabel: string
 }
 
-export const MOCK_RECENT_ACTIVITY: ActivityItem[] = [
+export type RecentActivityProps = {
+  title?: string
+  items: ActivityItem[]
+  isSampleData?: boolean
+}
+
+export const DEFAULT_MOCK_ACTIVITY: ActivityItem[] = [
   {
-    date: '2026-03-18',
-    summary: 'A live listing moved to under offer.',
+    id: 'a1',
+    title: 'Distribution posted (sample)',
+    detail: 'Sample Multifamily Fund A',
+    dateLabel: 'Mar 1, 2026',
   },
   {
-    date: '2026-03-12',
-    summary: 'A sold listing was added to your recent deals.',
+    id: 'a2',
+    title: 'Capital call notice (sample)',
+    detail: 'Sample Industrial Note B',
+    dateLabel: 'Feb 18, 2026',
   },
   {
-    date: '2026-03-04',
-    summary: 'Your profile contact was reviewed.',
+    id: 'a3',
+    title: 'Profile document uploaded (sample)',
+    detail: 'Accreditation letter',
+    dateLabel: 'Feb 5, 2026',
   },
 ]
 
-export type RecentActivityProps = {
-  items?: ActivityItem[]
-}
-
-/** One date and one line per event. Not deal cards or holding rows. */
 export function RecentActivity({
-  items = MOCK_RECENT_ACTIVITY,
+  title = 'Recent activity',
+  items = DEFAULT_MOCK_ACTIVITY,
+  isSampleData = true,
 }: RecentActivityProps) {
-  const showingPlaceholder = items === MOCK_RECENT_ACTIVITY
-
   return (
-    <article className="dashboard-widget">
-      {showingPlaceholder ? (
-        <p className="sample-banner" role="note">
-          Sample data — not live account activity.
-        </p>
-      ) : null}
-      <h3 className="dashboard-widget-title">Recent activity</h3>
-      <ul className="activity-list">
+    <section className="recent-activity" aria-labelledby="recent-activity-heading">
+      <div className="recent-activity__header">
+        <h2 id="recent-activity-heading">{title}</h2>
+        {isSampleData ? (
+          <p className="sample-data-banner" role="note">
+            Sample activity — not connected to a live feed
+          </p>
+        ) : null}
+      </div>
+      <ol className="recent-activity__list">
         {items.map((item) => (
-          <li key={`${item.date}-${item.summary}`}>
-            <time dateTime={item.date}>{item.date}</time>
-            <p>{item.summary}</p>
+          <li key={item.id} className="recent-activity__item">
+            <div className="recent-activity__body">
+              <p className="recent-activity__title">{item.title}</p>
+              <p className="recent-activity__detail">{item.detail}</p>
+            </div>
+            <time className="recent-activity__date">{item.dateLabel}</time>
           </li>
         ))}
-      </ul>
-    </article>
+      </ol>
+    </section>
   )
 }

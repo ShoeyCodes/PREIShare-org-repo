@@ -1,17 +1,23 @@
+import type { ReactNode } from 'react'
+
 export type StatsCardProps = {
   label: string
   value: string
   hint?: string
+  /** Optional icon or badge slot for later polish */
+  icon?: ReactNode
 }
 
-/** One scannable investor metric. Mock only — this component does not load data. */
-export function StatsCard({ label, value, hint }: StatsCardProps) {
+/** Reusable metric tile for the investor dashboard home. */
+export function StatsCard({ label, value, hint, icon }: StatsCardProps) {
   return (
-    <article className="stats-card">
-      <p className="stats-card-mock">Mock</p>
-      <h3 className="stats-card-label">{label}</h3>
-      <p className="stats-card-value">{value}</p>
-      {hint ? <p className="stats-card-hint">{hint}</p> : null}
+    <article className="stats-card" aria-label={label}>
+      <header className="stats-card__header">
+        <p className="stats-card__label">{label}</p>
+        {icon ? <span className="stats-card__icon">{icon}</span> : null}
+      </header>
+      <p className="stats-card__value">{value}</p>
+      {hint ? <p className="stats-card__hint">{hint}</p> : null}
     </article>
   )
 }

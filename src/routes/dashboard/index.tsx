@@ -1,6 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PortfolioSummary } from '../../components/dashboard/PortfolioSummary'
-import { RecentActivity } from '../../components/dashboard/RecentActivity'
+import {
+  DEFAULT_MOCK_HOLDINGS,
+  PortfolioSummary,
+} from '../../components/dashboard/PortfolioSummary'
+import {
+  DEFAULT_MOCK_ACTIVITY,
+  RecentActivity,
+} from '../../components/dashboard/RecentActivity'
 import { StatsCard } from '../../components/dashboard/StatsCard'
 
 export const Route = createFileRoute('/dashboard/')({
@@ -10,25 +16,18 @@ export const Route = createFileRoute('/dashboard/')({
 function DashboardHomePage() {
   return (
     <div className="dashboard-home">
-      <div className="stats-row">
-        <StatsCard
-          label="Portfolio value"
-          value="$2.4M"
-          hint="Sample asking value across your holdings"
-        />
-        <StatsCard
-          label="Open deals"
-          value="6"
-          hint="Live and under offer"
-        />
-        <StatsCard
-          label="Sold"
-          value="3"
-          hint="Sold listings you can review"
-        />
+      <p className="sample-data-banner" role="note">
+        Demo shell — all figures are placeholders
+      </p>
+      <div className="dashboard-home__stats">
+        <StatsCard label="Total portfolio value" value="$300,000" hint="Sample total" />
+        <StatsCard label="Open deals" value="3" hint="Sample count" />
+        <StatsCard label="Contributions YTD" value="$24,000" hint="Sample YTD" />
       </div>
-      <PortfolioSummary />
-      <RecentActivity />
+      <div className="dashboard-home__panels">
+        <PortfolioSummary totalLabel="$300,000" holdings={DEFAULT_MOCK_HOLDINGS} />
+        <RecentActivity items={DEFAULT_MOCK_ACTIVITY} />
+      </div>
     </div>
   )
 }

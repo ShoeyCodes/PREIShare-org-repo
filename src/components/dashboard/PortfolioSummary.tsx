@@ -1,41 +1,67 @@
-export type AllocationLine = {
-  label: string
-  share: string
+export type HoldingSnapshot = {
+  id: string
+  name: string
+  allocationLabel: string
+  valueLabel: string
 }
-
-export const MOCK_PORTFOLIO_ALLOCATION: AllocationLine[] = [
-  { label: 'Single-family', share: '40%' },
-  { label: 'Multi-family', share: '30%' },
-  { label: 'Commercial', share: '20%' },
-  { label: 'Land', share: '10%' },
-]
 
 export type PortfolioSummaryProps = {
-  lines?: AllocationLine[]
+  title?: string
+  totalLabel: string
+  holdings: HoldingSnapshot[]
+  isSampleData?: boolean
 }
 
-/** Allocation mix only. Not a headline metric and not the holdings table. */
-export function PortfolioSummary({
-  lines = MOCK_PORTFOLIO_ALLOCATION,
-}: PortfolioSummaryProps) {
-  const showingPlaceholder = lines === MOCK_PORTFOLIO_ALLOCATION
+export const DEFAULT_MOCK_HOLDINGS: HoldingSnapshot[] = [
+  {
+    id: 'h1',
+    name: 'Sample Multifamily Fund A',
+    allocationLabel: '40%',
+    valueLabel: '$120,000',
+  },
+  {
+    id: 'h2',
+    name: 'Sample Industrial Note B',
+    allocationLabel: '35%',
+    valueLabel: '$105,000',
+  },
+  {
+    id: 'h3',
+    name: 'Sample Cash Reserve',
+    allocationLabel: '25%',
+    valueLabel: '$75,000',
+  },
+]
 
+export function PortfolioSummary({
+  title = 'Portfolio summary',
+  totalLabel,
+  holdings = DEFAULT_MOCK_HOLDINGS,
+  isSampleData = true,
+}: PortfolioSummaryProps) {
   return (
-    <article className="dashboard-widget">
-      {showingPlaceholder ? (
-        <p className="sample-banner" role="note">
-          Sample data — not a live portfolio mix.
-        </p>
-      ) : null}
-      <h3 className="dashboard-widget-title">Portfolio mix</h3>
-      <ul className="allocation-list">
-        {lines.map((line) => (
-          <li key={line.label}>
-            <span>{line.label}</span>
-            <span>{line.share}</span>
+    <section className="portfolio-summary" aria-labelledby="portfolio-summary-heading">
+      <div className="portfolio-summary__header">
+        <h2 id="portfolio-summary-heading">{title}</h2>
+        {isSampleData ? (
+          <p className="sample-data-banner" role="note">
+            Sample data — placeholders only, not live balances
+          </p>
+        ) : null}
+      </div>
+      <p className="portfolio-summary__total">
+        <span className="portfolio-summary__total-label">Total (sample)</span>
+        <span className="portfolio-summary__total-value">{totalLabel}</span>
+      </p>
+      <ul className="portfolio-summary__list">
+        {holdings.map((item) => (
+          <li key={item.id} className="portfolio-summary__row">
+            <span className="portfolio-summary__name">{item.name}</span>
+            <span className="portfolio-summary__allocation">{item.allocationLabel}</span>
+            <span className="portfolio-summary__value">{item.valueLabel}</span>
           </li>
         ))}
       </ul>
-    </article>
+    </section>
   )
 }
