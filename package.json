@@ -1,8 +1,8 @@
 {
-  "name": "preishare-investor-listing-types",
+  "name": "preishare-investor-dashboard",
   "version": "0.1.0",
   "private": true,
-  "description": "Strict TypeScript types for PREIshare investor listings (Sprint 2 Topic 1)",
+  "description": "PREIshare investor dashboard shell (TanStack Start, Sprint 3)",
   "type": "module",
   "imports": {
     "#/*": "./src/*"
