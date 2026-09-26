@@ -9,7 +9,7 @@ type SidebarProps = {
 export function Sidebar({ brandLabel = 'PREIshare', children }: SidebarProps) {
   return (
     <aside className="dashboard-sidebar" aria-label="Investor navigation">
-      <div className="sidebar-brand">{brandLabel}</div>
+      <h1 className="sidebar-brand">{brandLabel}</h1>
       <nav className="sidebar-nav">
         {/* Placeholder links — full nav config + active states come in the next step */}
         <ul>
