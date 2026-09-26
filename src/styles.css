@@ -508,6 +508,126 @@ a {
   padding: 0.35rem 1.35rem 1.25rem;
 }
 
+.dashboard-home {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.stats-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: 16rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-strong);
+}
+
+.stats-card-mock {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--kicker);
+}
+
+.stats-card-label {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--sea-ink-soft);
+}
+
+.stats-card-value {
+  margin: 0;
+  font-family: Fraunces, ui-serif, Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--sea-ink);
+}
+
+.stats-card-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--sea-ink-soft);
+}
+
+.dashboard-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 32rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-strong);
+}
+
+.sample-banner {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.6rem;
+  background: color-mix(in oklab, var(--lagoon) 16%, transparent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--sea-ink);
+}
+
+.dashboard-widget-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--sea-ink);
+}
+
+.allocation-list,
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.allocation-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--sea-ink);
+}
+
+.activity-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.activity-list time {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--sea-ink-soft);
+}
+
+.activity-list p {
+  margin: 0;
+  color: var(--sea-ink);
+}
+
 .home-page {
   padding: 1.75rem 1.5rem 2.25rem 1.75rem;
   max-width: 40rem;
