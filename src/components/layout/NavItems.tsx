@@ -9,7 +9,7 @@ export function NavItems() {
   })
 
   return (
-    <nav aria-label="Dashboard">
+    <nav className="dash-nav" aria-label="Investor">
       <ul className="nav-list">
         {dashboardNavItems.map((item) => {
           const isActive =

@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import { useRouterState } from '@tanstack/react-router'
 import { Sidebar } from './Sidebar'
 import { Header } from './Header'
 
@@ -12,12 +13,31 @@ type AppShellProps = {
  * Child routes render inside `children` (wired from the dashboard layout route).
  */
 export function AppShell({ title, children }: AppShellProps) {
+  const [navOpen, setNavOpen] = useState(false)
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+
+  useEffect(() => {
+    setNavOpen(false)
+  }, [pathname])
+
   return (
-    <div className="app-shell">
+    <div className={navOpen ? 'app-shell dash-shell nav-open' : 'app-shell dash-shell'}>
       <Sidebar />
-      <div className="app-shell-main-column">
-        <Header title={title} />
-        <main className="app-shell-content" id="main-content">
+      <button
+        type="button"
+        className="dash-sidebar-backdrop"
+        aria-label="Close navigation"
+        onClick={() => setNavOpen(false)}
+      />
+      <div className="app-shell-main-column dash-main">
+        <Header
+          title={title}
+          navOpen={navOpen}
+          onToggleNav={() => setNavOpen((open) => !open)}
+        />
+        <main className="app-shell-content dash-content" id="main-content">
           {children}
         </main>
       </div>

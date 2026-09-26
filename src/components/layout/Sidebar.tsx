@@ -9,7 +9,11 @@ type SidebarProps = {
 /** Left navigation chrome for the investor dashboard shell. */
 export function Sidebar({ brandLabel = 'PREIshare', children }: SidebarProps) {
   return (
-    <aside className="dashboard-sidebar" aria-label="Investor navigation">
+    <aside
+      id="investor-sidebar"
+      className="dashboard-sidebar dash-sidebar"
+      aria-label="Investor navigation"
+    >
       <h1 className="sidebar-brand">{brandLabel}</h1>
       <NavItems />
       {children}
