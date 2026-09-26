@@ -499,24 +499,13 @@ a {
   margin: 0;
   font-family: Fraunces, ui-serif, Georgia, serif;
   font-size: 1.35rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--sea-ink);
 }
 
 .app-shell-content {
   padding: 0.35rem 1.35rem 1.25rem;
-}
-
-.section-title {
-  margin: 0.15rem 0 0.85rem;
-  padding: 0.45rem 0.2rem 0.55rem;
-  font-family: Fraunces, ui-serif, Georgia, serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  color: var(--sea-ink);
 }
 
 .home-page {

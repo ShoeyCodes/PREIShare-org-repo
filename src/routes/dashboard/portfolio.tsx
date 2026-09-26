@@ -7,7 +7,6 @@ export const Route = createFileRoute('/dashboard/portfolio')({
 function PortfolioPage() {
   return (
     <main>
-      <h2 className="section-title">Portfolio</h2>
       <p>Placeholder for holdings and performance.</p>
     </main>
   )
