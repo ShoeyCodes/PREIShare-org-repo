@@ -503,6 +503,45 @@ a {
   padding: 0.35rem 1.35rem 1.25rem;
 }
 
+.home-page {
+  padding: 1.75rem 1.5rem 2.25rem 1.75rem;
+  max-width: 40rem;
+}
+
+.home-title {
+  margin: 0 0 1rem;
+  font-family: Fraunces, ui-serif, Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--sea-ink);
+}
+
+.home-lead {
+  margin: 0 0 0.85rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--sea-ink-soft);
+}
+
+.home-action {
+  margin: 0;
+}
+
+.home-action a {
+  display: inline-block;
+  padding: 0.2rem 0.15rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--lagoon-deep);
+}
+
+.home-action a:hover {
+  color: var(--sea-ink);
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   background: color-mix(in oklab, var(--header-bg) 84%, transparent 16%);

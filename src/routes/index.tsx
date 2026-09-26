@@ -6,10 +6,10 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
   return (
-    <main>
-      <h1>PREIshare</h1>
-      <p>Investor dashboard shell — starter home route.</p>
-      <p>
+    <main className="home-page">
+      <h1 className="home-title">PREIshare</h1>
+      <p className="home-lead">Investor dashboard shell — starter home route.</p>
+      <p className="home-action">
         <Link to="/dashboard">Open investor dashboard</Link>
       </p>
     </main>
