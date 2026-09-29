@@ -22,7 +22,7 @@ Source requirements: `docs/preishare-dashboard-requirements.md`.
 ## Planned dashboard route tree
 
 ```text
-/dashboard                 → layout (src/routes/dashboard.tsx: header + sidebar + outlet)
+/dashboard                 → layout (src/routes/dashboard/route.tsx: header + sidebar + outlet)
 /dashboard                 → index (src/routes/dashboard/index.tsx: metrics, portfolio summary, activity)
 /dashboard/portfolio       → child page (holdings placeholder)
 /dashboard/deals           → child page (deals placeholder)
@@ -31,21 +31,23 @@ Source requirements: `docs/preishare-dashboard-requirements.md`.
 
 Activity stays on the home page. The requirements brief does not ask for a separate activity URL.
 
-## File map (exact files to create in a later step)
+## Files to create later
 
-No new dashboard route files are needed for this shell. Creating a second layout such as `src/routes/dashboard/route.tsx` would sit beside `src/routes/dashboard.tsx` and should not be added.
+`src/routes/dashboard.tsx` is the layout that exists today. It is not a substitute for the planned layout path. The later step creates `src/routes/dashboard/route.tsx` and moves the shell into that file. TanStack Start treats `dashboard.tsx` and `dashboard/route.tsx` as the same `/dashboard` layout, so both must not stay in place together. This plan does not delete `dashboard.tsx`. The step that adds `route.tsx` has to retire the flat file in that same change so only one layout remains.
 
-| URL | Role | File (already present) | Wraps / renders |
+| URL | Role | File to create | Wraps / renders |
 | --- | --- | --- | --- |
-| `/dashboard` | Layout route | `src/routes/dashboard.tsx` | Shared dashboard chrome; renders the child via Outlet |
-| `/dashboard` | Index page | `src/routes/dashboard/index.tsx` | Investor home content |
-| `/dashboard/portfolio` | Child page | `src/routes/dashboard/portfolio.tsx` | Holdings placeholder |
-| `/dashboard/deals` | Child page | `src/routes/dashboard/deals.tsx` | Deals placeholder |
-| `/dashboard/profile` | Child page | `src/routes/dashboard/profile.tsx` | Profile placeholder |
+| `/dashboard` | Layout route | `src/routes/dashboard/route.tsx` | Shared dashboard chrome; renders the child via Outlet |
+| `/dashboard` | Index page | `src/routes/dashboard/index.tsx` (already exists; do not recreate) | Investor home content |
+| `/dashboard/portfolio` | Child page | `src/routes/dashboard/portfolio.tsx` (already exists) | Holdings placeholder |
+| `/dashboard/deals` | Child page | `src/routes/dashboard/deals.tsx` (already exists) | Deals placeholder |
+| `/dashboard/profile` | Child page | `src/routes/dashboard/profile.tsx` (already exists) | Profile placeholder |
+
+The only new route file in that step is `src/routes/dashboard/route.tsx`.
 
 ## Layout vs page responsibilities
 
-- **Layout (`src/routes/dashboard.tsx`)**: persistent chrome only (sidebar, header, main outlet). No metric cards in this file.
+- **Layout (`src/routes/dashboard/route.tsx`)**: persistent chrome only (sidebar, header, main outlet). No metric cards in this file. Until that file exists, `src/routes/dashboard.tsx` is doing this job.
 - **Index (`src/routes/dashboard/index.tsx`)**: dashboard home. Metric cards, portfolio summary, and recent activity. Uses the parent layout.
 - **Child pages**: small pages so Home, Portfolio, Deals, and Profile each have a real URL. They render inside the layout, not instead of it.
 
@@ -62,8 +64,9 @@ Labels match the requirements brief: Home, Portfolio, Deals, Profile. They are a
 
 ## Out of scope for this plan
 
-- New route files, including `/dashboard/activity` and `src/routes/dashboard/route.tsx`
-- Deleting `src/routes/index.tsx`, `src/routes/about.tsx`, or any dashboard file
+- A separate `/dashboard/activity` route
+- Deleting `src/routes/index.tsx`, `src/routes/about.tsx`, or any dashboard child page
+- Leaving both `src/routes/dashboard.tsx` and `src/routes/dashboard/route.tsx` in the tree at the same time
 - Component prop designs and styling
 - Auth guards, login, or signup routes
 - API routes and Supabase queries
@@ -73,7 +76,7 @@ Labels match the requirements brief: Home, Portfolio, Deals, Profile. They are a
 - Visiting `/dashboard` shows the layout shell and the home index content inside it.
 - `/dashboard/portfolio`, `/dashboard/deals`, and `/dashboard/profile` render inside that same layout.
 - `/` and `/about` stay as they are.
-- No existing route file is deleted.
+- This document does not delete any route file. When `src/routes/dashboard/route.tsx` is added, `src/routes/dashboard.tsx` is retired in that same change so the app does not have two `/dashboard` layouts.
 
 ## Open questions
 
