@@ -15,7 +15,7 @@ export function MobileNav() {
     <div className="md:hidden">
       <button
         type="button"
-        className="rounded border px-3 py-2 text-sm"
+        className="rounded border border-slate-700 bg-slate-800 px-3 py-2 text-sm font-medium text-white"
         aria-expanded={open}
         aria-controls="mobile-dashboard-menu"
         onClick={() => setOpen((value) => !value)}
@@ -26,14 +26,14 @@ export function MobileNav() {
         <nav
           id="mobile-dashboard-menu"
           aria-label="Dashboard"
-          className="mt-2 rounded border bg-white p-3"
+          className="mt-2 rounded border border-slate-700 bg-slate-800 p-3"
         >
           <ul className="space-y-2">
             {navItems.map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="block rounded px-3 py-2 text-sm"
+                  className="block rounded bg-slate-700 px-3 py-2 text-sm font-medium text-white"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}

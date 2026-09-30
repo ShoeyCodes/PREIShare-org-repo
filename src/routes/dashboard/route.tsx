@@ -8,7 +8,7 @@ export const Route = createFileRoute('/dashboard')({
 
 function DashboardLayout() {
   return (
-    <AppShell title="Overview">
+    <AppShell>
       <Outlet />
     </AppShell>
   )
