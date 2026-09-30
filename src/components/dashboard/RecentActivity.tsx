@@ -1,63 +1,63 @@
 export type ActivityItem = {
   id: string
-  title: string
-  detail: string
-  dateLabel: string
+  /** Already-formatted time label for display, e.g. "Mar 18 · 2:04 PM" */
+  whenLabel: string
+  description: string
+  category?: string
 }
 
 export type RecentActivityProps = {
   title?: string
   items: ActivityItem[]
-  isSampleData?: boolean
+  /** Shown when items is empty */
+  emptyMessage?: string
 }
 
-export const DEFAULT_MOCK_ACTIVITY: ActivityItem[] = [
+/** MOCK PLACEHOLDER — replace with real activity feed later */
+export const MOCK_RECENT_ACTIVITY: ActivityItem[] = [
   {
     id: 'a1',
-    title: 'Distribution posted (sample)',
-    detail: 'Sample Multifamily Fund A',
-    dateLabel: 'Mar 1, 2026',
+    whenLabel: 'Mar 18 · 2:04 PM',
+    description: 'Distribution posted for Riverfront Multifamily',
+    category: 'Distribution',
   },
   {
     id: 'a2',
-    title: 'Capital call notice (sample)',
-    detail: 'Sample Industrial Note B',
-    dateLabel: 'Feb 18, 2026',
+    whenLabel: 'Mar 17 · 11:20 AM',
+    description: 'Quarterly report available for Cedar Retail Plaza',
+    category: 'Document',
   },
   {
     id: 'a3',
-    title: 'Profile document uploaded (sample)',
-    detail: 'Accreditation letter',
-    dateLabel: 'Feb 5, 2026',
+    whenLabel: 'Mar 15 · 9:00 AM',
+    description: 'Capital call reminder — Harbor Industrial',
+    category: 'Notice',
   },
 ]
 
 export function RecentActivity({
   title = 'Recent activity',
-  items = DEFAULT_MOCK_ACTIVITY,
-  isSampleData = true,
+  items,
+  emptyMessage = 'No recent activity yet. This list is a sample until live data is connected.',
 }: RecentActivityProps) {
   return (
-    <section className="recent-activity" aria-labelledby="recent-activity-heading">
-      <div className="recent-activity__header">
-        <h2 id="recent-activity-heading">{title}</h2>
-        {isSampleData ? (
-          <p className="sample-data-banner" role="note">
-            Sample activity — not connected to a live feed
-          </p>
-        ) : null}
-      </div>
-      <ol className="recent-activity__list">
-        {items.map((item) => (
-          <li key={item.id} className="recent-activity__item">
-            <div className="recent-activity__body">
-              <p className="recent-activity__title">{item.title}</p>
-              <p className="recent-activity__detail">{item.detail}</p>
-            </div>
-            <time className="recent-activity__date">{item.dateLabel}</time>
-          </li>
-        ))}
-      </ol>
+    <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+      {items.length === 0 ? (
+        <p className="mt-4 text-sm text-slate-600">{emptyMessage}</p>
+      ) : (
+        <ul className="mt-4 space-y-3">
+          {items.map((item) => (
+            <li key={item.id} className="border-l-2 border-slate-200 pl-3">
+              <p className="text-xs text-slate-500">{item.whenLabel}</p>
+              <p className="text-sm font-medium text-slate-800">{item.description}</p>
+              {item.category ? (
+                <p className="text-xs text-slate-500">{item.category}</p>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   )
 }
