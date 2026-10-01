@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 export type HeaderProps = {
   /** Optional page or section label shown near the brand */
-  title?: string
+  title?: string | undefined
   /** Optional right-side actions (keep empty for now if unused) */
   actions?: ReactNode
 }

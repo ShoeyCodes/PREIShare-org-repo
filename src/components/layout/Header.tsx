@@ -3,7 +3,7 @@ import { useRouterState } from '@tanstack/react-router'
 import { getPageTitle } from './navConfig'
 
 type HeaderProps = {
-  title?: string
+  title?: string | undefined
   children?: ReactNode
   navOpen?: boolean
   onToggleNav?: () => void
