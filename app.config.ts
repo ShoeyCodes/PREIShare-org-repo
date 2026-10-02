@@ -12,5 +12,9 @@ import { defineConfig } from 'vite'
  */
 export default defineConfig({
   resolve: { tsconfigPaths: true },
+  // Vercel’s Supabase integration sets NEXT_PUBLIC_ names. Vite only
+  // inlines prefixed vars into the browser bundle. Do not add an empty
+  // prefix: that would ship server secrets such as the service role.
+  envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   plugins: [devtools(), tailwindcss(), tanstackStart(), nitro(), viteReact()],
 })

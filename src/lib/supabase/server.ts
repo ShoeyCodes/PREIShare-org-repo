@@ -17,7 +17,10 @@ import { normalizeSupabaseUrl } from './url'
  * Do not use this for sponsor listing reads or writes.
  */
 export function createServerSupabaseClient() {
-  const rawUrl = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const rawUrl =
+    process.env.SUPABASE_URL ??
+    process.env.VITE_SUPABASE_URL ??
+    process.env.NEXT_PUBLIC_SUPABASE_URL
   const url = rawUrl ? normalizeSupabaseUrl(rawUrl) : rawUrl
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY
   if (!url || !key) {
@@ -37,9 +40,16 @@ export function createServerSupabaseClient() {
  * and row-level security applies. Never reads SUPABASE_SERVICE_ROLE_KEY.
  */
 export function createUserServerSupabaseClient() {
-  const rawUrl = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const rawUrl =
+    process.env.SUPABASE_URL ??
+    process.env.VITE_SUPABASE_URL ??
+    process.env.NEXT_PUBLIC_SUPABASE_URL
   const url = rawUrl ? normalizeSupabaseUrl(rawUrl) : rawUrl
-  const anonKey = process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY
+  const anonKey =
+    process.env.SUPABASE_ANON_KEY ??
+    process.env.VITE_SUPABASE_ANON_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   if (!url || !anonKey) {
     throw new Error(
       'Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY. See docs/setup/supabase-env-checklist.md',
