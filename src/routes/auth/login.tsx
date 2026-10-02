@@ -19,19 +19,26 @@ function LoginPage() {
     const form = new FormData(event.currentTarget)
     const email = String(form.get('email') ?? '')
     const password = String(form.get('password') ?? '')
-    const supabase = createBrowserSupabaseClient()
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    setPending(false)
-    if (signInError) {
-      setError(signInError.message)
-      return
+    try {
+      const supabase = createBrowserSupabaseClient()
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      if (signInError) {
+        setError(signInError.message)
+        return
+      }
+      await navigate({ to: '/dashboard' })
+    } catch (signInError) {
+      setError(
+        signInError instanceof Error
+          ? signInError.message
+          : 'Could not sign in. Try again.',
+      )
+    } finally {
+      setPending(false)
     }
-
-    await navigate({ to: '/dashboard' })
   }
 
   return (

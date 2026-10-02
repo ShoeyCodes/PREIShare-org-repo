@@ -10,13 +10,15 @@ import {
   setResponseHeader,
 } from '@tanstack/react-start/server'
 import type { Database } from './types'
+import { normalizeSupabaseUrl } from './url'
 
 /**
  * Service-role client. Bypasses row-level security.
  * Do not use this for sponsor listing reads or writes.
  */
 export function createServerSupabaseClient() {
-  const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const rawUrl = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const url = rawUrl ? normalizeSupabaseUrl(rawUrl) : rawUrl
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY
   if (!url || !key) {
     throw new Error('Missing server Supabase env. See docs/setup/supabase-env-checklist.md')
@@ -35,7 +37,8 @@ export function createServerSupabaseClient() {
  * and row-level security applies. Never reads SUPABASE_SERVICE_ROLE_KEY.
  */
 export function createUserServerSupabaseClient() {
-  const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const rawUrl = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const url = rawUrl ? normalizeSupabaseUrl(rawUrl) : rawUrl
   const anonKey = process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY
   if (!url || !anonKey) {
     throw new Error(

@@ -19,24 +19,30 @@ function SignupPage() {
     const form = new FormData(event.currentTarget)
     const email = String(form.get('email') ?? '')
     const password = String(form.get('password') ?? '')
-    const supabase = createBrowserSupabaseClient()
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-
-    setPending(false)
-    if (signUpError) {
-      setError(signUpError.message)
-      return
+    try {
+      const supabase = createBrowserSupabaseClient()
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+      if (signUpError) {
+        setError(signUpError.message)
+        return
+      }
+      if (data.session) {
+        await navigate({ to: '/dashboard' })
+        return
+      }
+      await navigate({ to: '/auth/login' })
+    } catch (signUpError) {
+      setError(
+        signUpError instanceof Error
+          ? signUpError.message
+          : 'Could not create the account. Try again.',
+      )
+    } finally {
+      setPending(false)
     }
-
-    if (data.session) {
-      await navigate({ to: '/dashboard' })
-      return
-    }
-
-    await navigate({ to: '/auth/login' })
   }
 
   return (

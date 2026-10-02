@@ -3,9 +3,12 @@
 
 import { createBrowserClient } from '@supabase/ssr'
 import type { Database } from './types'
+import { normalizeSupabaseUrl } from './url'
 
 export function createBrowserSupabaseClient() {
   const url = import.meta.env.VITE_SUPABASE_URL
+    ? normalizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL)
+    : import.meta.env.VITE_SUPABASE_URL
   const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
   if (!url || !anonKey) {
     throw new Error(
