@@ -40,26 +40,26 @@ function SignupPage() {
   }
 
   return (
-    <main className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-2xl font-semibold text-slate-900">Sign up</h1>
-      <p className="mt-2 text-sm text-slate-600">
+    <main className="mx-auto max-w-md px-4 py-12 text-[var(--sea-ink)]">
+      <h1 className="text-2xl font-semibold">Sign up</h1>
+      <p className="mt-2 text-sm text-[var(--sea-ink-soft)]">
         Create a sponsor account with email and password.
       </p>
       <form className="mt-6 space-y-4" onSubmit={onSubmit}>
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium">
           Email
           <input
-            className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+            className="mt-1 w-full rounded border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-2 text-[var(--sea-ink)]"
             name="email"
             type="email"
             autoComplete="email"
             required
           />
         </label>
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium">
           Password
           <input
-            className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+            className="mt-1 w-full rounded border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-2 text-[var(--sea-ink)]"
             name="password"
             type="password"
             autoComplete="new-password"
@@ -80,7 +80,7 @@ function SignupPage() {
           {pending ? 'Creating account…' : 'Sign up'}
         </button>
       </form>
-      <p className="mt-4 text-sm text-slate-600">
+      <p className="mt-4 text-sm text-[var(--sea-ink-soft)]">
         Already have an account? <Link to="/auth/login">Log in</Link>
       </p>
     </main>
