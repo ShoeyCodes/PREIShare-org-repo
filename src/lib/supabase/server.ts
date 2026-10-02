@@ -1,35 +1,20 @@
-// Server-only Supabase client.
-// Do not import this file from any component, route, or other module that ships to the browser.
-// SUPABASE_SERVICE_ROLE_KEY bypasses row-level security. It stays in process.env with no VITE_ prefix.
+// SERVER-ONLY: never import this file from browser components or client routes.
 
+/// <reference types="node" />
 import process from 'node:process'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './types'
 
-const CHECKLIST = 'docs/setup/supabase-env-checklist.md'
-
-function requireServerEnv(name: 'SUPABASE_URL' | 'SUPABASE_SERVICE_ROLE_KEY'): string {
-  const value = process.env[name]
-  if (typeof value !== 'string' || value.length === 0) {
-    throw new Error(
-      `Missing ${name}. Set this server-only variable in .env.local (never with a VITE_ prefix). See ${CHECKLIST}.`,
-    )
-  }
-  return value
-}
-
-/**
- * New server client. Reads env when called.
- * Auth persistence is off so this process does not store a browser session.
- */
 export function createServerSupabaseClient() {
-  const url = requireServerEnv('SUPABASE_URL')
-  const serviceRoleKey = requireServerEnv('SUPABASE_SERVICE_ROLE_KEY')
-  return createClient<Database>(url, serviceRoleKey, {
+  const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY
+  if (!url || !key) {
+    throw new Error('Missing server Supabase env. See docs/setup/supabase-env-checklist.md')
+  }
+  return createClient<Database>(url, key, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
-      detectSessionInUrl: false,
     },
   })
 }
