@@ -1,6 +1,7 @@
 // Browser-safe Supabase client. Safe to import from browser code.
+// Session cookies are the same login the server session helper reads.
 
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 import type { Database } from './types'
 
 export function createBrowserSupabaseClient() {
@@ -11,5 +12,5 @@ export function createBrowserSupabaseClient() {
       'Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY. See docs/setup/supabase-env-checklist.md',
     )
   }
-  return createClient<Database>(url, anonKey)
+  return createBrowserClient<Database>(url, anonKey)
 }
