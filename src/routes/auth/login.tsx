@@ -26,7 +26,12 @@ function LoginPage() {
         password,
       })
       if (signInError) {
-        setError(signInError.message)
+        const message = signInError.message.toLowerCase()
+        setError(
+          message.includes('rate limit')
+            ? 'Supabase only allows 2 confirmation emails per hour. If this account already exists, wait about an hour and log in again.'
+            : signInError.message,
+        )
         return
       }
       await navigate({ to: '/dashboard' })

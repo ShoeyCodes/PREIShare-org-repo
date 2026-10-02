@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useState, type FormEvent } from 'react'
 import { createBrowserSupabaseClient } from '../../lib/supabase/client'
+import { registerSponsor } from '../../server/register-sponsor'
 
 export const Route = createFileRoute('/auth/signup')({
   component: SignupPage,
@@ -20,20 +21,21 @@ function SignupPage() {
     const email = String(form.get('email') ?? '')
     const password = String(form.get('password') ?? '')
     try {
+      const created = await registerSponsor({ data: { email, password } })
+      if (!created.ok) {
+        setError(created.error)
+        return
+      }
       const supabase = createBrowserSupabaseClient()
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
-      if (signUpError) {
-        setError(signUpError.message)
+      if (signInError) {
+        setError(signInError.message)
         return
       }
-      if (data.session) {
-        await navigate({ to: '/dashboard' })
-        return
-      }
-      await navigate({ to: '/auth/login' })
+      await navigate({ to: '/dashboard' })
     } catch (signUpError) {
       setError(
         signUpError instanceof Error
