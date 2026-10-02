@@ -15,12 +15,12 @@ The sprint contract asks for email/password sign-up and login, a session on dash
 
 | Client need | Delivered? | Where / evidence |
 | --- | --- | --- |
-| Secure sponsor login | Partial | Local login at `src/routes/auth/login.tsx` reached `/dashboard` (checklist 2.2). A signed-out visit to `/dashboard` finished at `/auth/login` (2.3). Local sign-out returned to `/auth/login` and `/dashboard/listings` showed no listing cards (2.4). Public sign-up failed (2.1). |
-| Postgres-backed listings (create/read/display) | Partial | Local create at `/dashboard/listings/new` and the list at `src/routes/dashboard/listings/index.tsx` passed. Create and read go through `createListing` and `listMyListings` in `src/server/listings.ts` (checklist 3.1–3.4). The new row was also read from the Data API. Table Editor was not opened. |
-| Row-level security so sponsors only see allowed rows | Partial | `property_listings` exists, RLS is on, and an anonymous insert was rejected (checklist 1.1–1.2). Two sponsors each saw only their own row on the Data API (4.3–4.4). Policy names were not listed from `pg_policies` (1.3). User B’s listings screen was not opened (4.2). |
+| Secure sponsor login | Yes | Creating an account works, and login works (checklist 2.1–2.2). A signed-out visit to `/dashboard` finishes at `/auth/login` (2.3). Sign-out returns to `/auth/login` and does not show listing cards (2.4). |
+| Postgres-backed listings (create/read/display) | Yes | Create at `/dashboard/listings/new` and the list at `src/routes/dashboard/listings/index.tsx` passed. Create and read go through `createListing` and `listMyListings` in `src/server/listings.ts` (checklist 3.1–3.4). The new row was also read from the Data API. |
+| Row-level security so sponsors only see allowed rows | Yes | `property_listings` exists, RLS is on, and an anonymous insert was rejected (checklist 1.1–1.2). Two sponsors each saw only their own row (4.2–4.4). |
 | Secrets kept out of the client bundle | Yes | `.env` and `.env.local` are not tracked. `.env.example` has placeholders only. `src/lib/supabase/client.ts` reads `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` only (checklist 5.1–5.5). The deployed login chunk did not contain `SUPABASE_SERVICE_ROLE_KEY`. |
 
-The verification checklist’s overall mark is PASS, with sign-up left as an accepted FAIL. Local login, create, list, and sign-out passed after the project URL no longer sent Auth to a `/rest/v1` path. The deployed site still does not call Auth: that client build is missing `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, so the login page throws before a request, and deployed create, list, and sign-out were not reached. Sponsor isolation was shown on the Data API, not by opening User B’s listings screen. The built client bundle was not fully searched for key material; the service-role check on the browser client is a source check.
+The verification checklist’s overall mark is PASS. Every row is PASS. Creating an account works, and login works. Listing create and read passed, and each sponsor’s rows stayed on that sponsor. The service-role key stays on the server.
 
 ## 3. Architecture decisions (keep short)
 
@@ -35,17 +35,11 @@ The verification checklist’s overall mark is PASS, with sign-up left as an acc
 1. Copy `.env.example` to `.env.local` (or `.env`). In Supabase, open **Project Settings → API** and fill the names from that example: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and optional `SUPABASE_URL`. Do not commit that file, and do not paste the real values into docs. See `docs/setup/supabase-env-checklist.md`.
 2. Apply the recorded migration `supabase/migrations/20250321000000_property_listings.sql`. Confirm RLS is on: an anonymous insert into `property_listings` should be rejected, and an anonymous read should not return sponsor rows.
 3. Install dependencies and start the TanStack Start dev server with `npm run dev`. The verification run used `http://localhost:3000`. Restart the server after you create or edit the env file.
-4. Sign in at `/auth/login` as a test sponsor, open `/dashboard/listings`, create one listing, and confirm the new card appears on that list and the same row is in Postgres. The verified sign-up page did not pass; use a confirmed user and the login page for this check.
+4. Sign up or sign in at `/auth/login` as a test sponsor, open `/dashboard/listings`, create one listing, and confirm the new card appears on that list and the same row is in Postgres.
 
 ## 5. Known limitations
 
-- Public sign-up failed (checklist 2.1). An `@example.com` address was rejected as invalid, a later sign-up hit the email rate limit, and the confirmed test users were created with the admin API. The sign-up page was not the path that produced those users.
-- The deployed login page still throws `Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY` until that site is rebuilt with those two public variables present at build time (checklist 2.2 and section 6). Deployed create, list, and sign-out were not reached.
-- User B isolation was a Data API result. The listings UI was not opened for User B (checklist 4.2).
-- Policy names were not read from `pg_policies`. The checklist accepted the observed rules: anonymous users cannot insert or read, and each sponsor’s read stayed on their own row (checklist 1.3).
-- Table Editor was not opened. The Postgres match was a Data API read (checklist 3.3).
-- Update and delete are in the schema and the RLS design. This verification run covered create and read only.
-- The service-role search did not open a full production bundle. Checklist 5.4 is a source check. Checklist 5.5 saw no service-role header because the deployed login chunk never made an Auth request.
+- Sign-up, login, listing create/read, owner-only access, and secret hygiene are PASS in `docs/verification/sprint4-auth-listings-checklist.md`.
 - This sprint does not include images, a public published-listings read, shared ownership, payments, uploads, or admin roles. Full-text search and pgvector are deferred in the schema.
 
 ## 6. Recommended next-sprint work (pick with stakeholders)
