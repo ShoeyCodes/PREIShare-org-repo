@@ -3,7 +3,10 @@ node_modules
 dist
 dist-ssr
 *.local
+# Real env files stay local. .env.example is the only env file we commit.
 .env
+.env.local
+.env.*.local
 .env.*
 !.env.example
 .nitro
